@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springstudy.mapper.UserMapper">
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO USERS(ID, USERNAME, PASSWORD, EMAIL)
+        VALUES ((SELECT NVL(MAX(ID), 0) + 1 FROM USERS), #{username}, #{password}, #{email})
+    </insert>
+
+    <update id="updateUser">
+        UPDATE USERS SET PASSWORD = #{password}, EMAIL = #{email} WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteUser">
+        DELETE FROM USERS WHERE ID = #{id}
+    </delete>
+
+    <select id="getUser">
+        SELECT * FROM USERS WHERE USERNAME = #{username} LIMIT 1
+    </select>
+
+    <select id="getUserByID">
+        SELECT * FROM USERS WHERE ID = #{id}
+    </select>
+
+    <select id="getUserList">
+        SELECT * FROM USERS ORDER BY USERNAME DESC
+    </select>
+</mapper>
