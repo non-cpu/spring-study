@@ -2,13 +2,16 @@ package com.example.springstudy.controller;
 
 import com.example.springstudy.domain.RoleType;
 import com.example.springstudy.domain.User;
+import com.example.springstudy.dto.ResponseDTO;
 import com.example.springstudy.exception.StudyException;
 import com.example.springstudy.persistence.UserRepository;
+import com.example.springstudy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +21,12 @@ import java.util.function.Supplier;
 
 @Controller
 public class UserController {
+    private final UserService userService;
     private final UserRepository userRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository) {
+        this.userService = userService;
         this.userRepository = userRepository;
     }
 
@@ -69,5 +74,27 @@ public class UserController {
     public @ResponseBody Page<User> getUserListPaging(
             @PageableDefault(size = 2, direction = Sort.Direction.DESC, sort = {"id", "username"}) Pageable pageable) {
         return userRepository.findAll(pageable);
+    }
+
+    @GetMapping({"", "/"})
+    public String getPostList() {
+        return "index";
+    }
+
+    @GetMapping("/auth/insertUser")
+    public String insertUser() {
+        return "user/insertUser";
+    }
+
+    @PostMapping("/auth/insertUser")
+    public @ResponseBody ResponseDTO<?> authInsertUser(@RequestBody User user) {
+        User findUser = userService.getUser(user.getUsername());
+
+        if (findUser.getUsername() == null) {
+            userService.insertUser(user);
+            return new ResponseDTO<>(HttpStatus.OK.value(), user.getUsername() + " 가입 성공.");
+        } else {
+            return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), user.getUsername() + " 님은 이미 회원입니다.");
+        }
     }
 }
