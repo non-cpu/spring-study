@@ -32,6 +32,7 @@ public class UserDAOTest {
 
         userDAO.deleteUser(user);
     }
+
     @Test
     void updateUserTest() {
         String updatedEmail = "updated@gmail.com";
@@ -46,6 +47,7 @@ public class UserDAOTest {
 
         userDAO.deleteUser(user);
     }
+
     @Test
     void deleteUserTest() {
         User user = insertUser();
@@ -54,6 +56,7 @@ public class UserDAOTest {
         User deletedUser = userDAO.getUserByID(user.getId());
         assertNull(deletedUser);
     }
+
     @Test
     void getUserTest() {
         User user = insertUser();
@@ -63,6 +66,7 @@ public class UserDAOTest {
 
         userDAO.deleteUser(user);
     }
+
     @Test
     void getUserByIDTest() {
         User user = insertUser();
@@ -72,8 +76,9 @@ public class UserDAOTest {
 
         userDAO.deleteUser(user);
     }
+
     @Test
-    void getUserListTest(){
+    void getUserListTest() {
         int before = userDAO.getUserList().size();
 
         User user = insertUser();

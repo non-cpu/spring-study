@@ -16,20 +16,20 @@ public class UserDAO {
         this.mybatis = mybatis;
     }
 
-    public User insertUser(User user){
+    public User insertUser(User user) {
         mybatis.insert("insertUser", user);
         return user;
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user) {
         mybatis.update("updateUser", user);
     }
 
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
         mybatis.delete("deleteUser", user);
     }
 
-    public User getUser(String username){
+    public User getUser(String username) {
         return mybatis.selectOne("getUser", username);
     }
 
@@ -37,7 +37,7 @@ public class UserDAO {
         return mybatis.selectOne("getUserByID", id);
     }
 
-    public List<User> getUserList(){
+    public List<User> getUserList() {
         return mybatis.selectList("getUserList");
     }
 }

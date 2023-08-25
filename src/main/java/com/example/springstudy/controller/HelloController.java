@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HelloController {
     @GetMapping("/html")
-    public String html(){
+    public String html() {
         System.out.println("HTML 파일이 요청됨");
         return "redirect:hello.html";
     }
