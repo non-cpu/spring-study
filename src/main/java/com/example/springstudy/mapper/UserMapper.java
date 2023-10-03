@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+@Mapper
 public interface UserMapper {
     void insertUser(User user);
 
@@ -19,6 +20,7 @@ public interface UserMapper {
     List<User> getUserList();
 }
 
+//@Mapper
 //public interface UserMapper {
 //    @Insert("INSERT INTO USERS(ID, USERNAME, PASSWORD, EMAIL) " +
 //            "VALUES((SELECT NVL(MAX(ID), 0) + 1 FROM USERS), #{username}, #{password}, #{email})")
